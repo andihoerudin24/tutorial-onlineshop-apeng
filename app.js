@@ -1,18 +1,34 @@
-const express = require('express');
+const express = require("express");
 
-const cors = require('cors')
+const mongoose = require("mongoose");
 
-const bodyParser = require('body-parser')
+const cors = require("cors");
 
-const feedRoutes = require('./routes/feed')
+const bodyParser = require("body-parser");
 
-const app = express()
+const feedRoutes = require("./routes/feed");
 
-app.use(cors())
+const app = express();
 
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json())
+app.use(cors());
 
-app.use('/feed',feedRoutes)
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.listen(8080)
+app.use("/feed", feedRoutes);
+
+mongoose
+  .connect(
+    "mongodb+srv://andihoerudin34:andihoerudin@cluster0.dx4sn.mongodb.net/posts?retryWrites=true&w=majority",
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    }
+  )
+  .then((result) => {
+    app.listen(8080);
+  })
+  .catch((err) => {
+    console.log("err", err);
+  });
