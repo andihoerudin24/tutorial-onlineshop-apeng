@@ -63,6 +63,7 @@ exports.getSinglePost = (req, res, next) => {
         message: "Post Fetched",
         post: post,
       });
+      
     })
     .catch((err) => {
       if (!err.statusCode) {
