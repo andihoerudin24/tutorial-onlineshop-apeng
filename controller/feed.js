@@ -1,11 +1,12 @@
 const { validationResult } = require("express-validator");
 const Post = require("../model/post");
+const multer = require('multer');
 
 exports.getPost = (req, res, next) => {
   Post.find()
     .then((posts) => {
       res.status(200).json({
-        message:'Fetched Post Successfuly',
+        message: "Fetched Post Successfuly",
         posts: posts,
       });
     })
@@ -24,12 +25,18 @@ exports.createPost = (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
+  if (!req.file) {
+    const error = new Error("No Image provided");
+    error.statusCode = 422;
+    throw error;
+  }
+  const imageUrl = req.file.path;
   const title = req.body.title;
   const content = req.body.content;
   const posts = new Post({
     title: title,
     content: content,
-    imageUrl: "images/duck.jpg",
+    imageUrl: imageUrl,
     creator: {
       name: "Andi Hoerudin",
     },
@@ -63,7 +70,6 @@ exports.getSinglePost = (req, res, next) => {
         message: "Post Fetched",
         post: post,
       });
-      
     })
     .catch((err) => {
       if (!err.statusCode) {
