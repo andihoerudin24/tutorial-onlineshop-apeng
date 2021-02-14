@@ -10,6 +10,8 @@ const bodyParser = require("body-parser");
 
 const feedRoutes = require("./routes/feed");
 
+const authRoutes = require("./routes/user");
+
 const app = express();
 
 app.use(cors());
@@ -21,6 +23,7 @@ app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/feed", feedRoutes);
+app.use("/auth", authRoutes);
 
 /*
  * definition global error
@@ -29,8 +32,10 @@ app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
   const message = error.message;
+  const data   = error.data
   res.status(status).json({
     message: message,
+    data:data
   });
 });
 
