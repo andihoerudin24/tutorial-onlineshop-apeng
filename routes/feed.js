@@ -7,7 +7,7 @@ const { fileFilter, fileStorage } = require("../helper/upload");
 
 const router = express.Router();
 
-router.get("/posts",isAuth,feedController.getPost);
+router.get("/posts",feedController.getPost);
 
 router.post(
   "/posts",isAuth,

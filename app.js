@@ -58,3 +58,5 @@ mongoose
   .catch((err) => {
     console.log("err", err);
   });
+
+module.exports = app
