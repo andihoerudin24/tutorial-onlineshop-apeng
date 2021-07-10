@@ -63,6 +63,9 @@ exports.login = async (req, res, next) => {
     res.status(200).json({
       token: token,
       userId: loadedUser._id.toString(),
+      email:loadedUser.email,
+      name:loadedUser.name,
+      expiredToken:'1h'
     });
   } catch (error) {
     if (!error.statusCode) {
